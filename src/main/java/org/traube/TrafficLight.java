@@ -118,7 +118,12 @@ public class TrafficLight extends JFrame {
         this.setTitle(appTitle);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
-        this.setLayout(new GridLayout(4, 1, 10, 10));
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(4, 1, 10, 10));
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        contentPanel.setBorder(padding);
+        this.setContentPane(contentPanel);
 
         System.setProperty("awt.useSystemAAFontSettings", "on"); // For antialiasing text
 
