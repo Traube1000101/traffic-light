@@ -9,11 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.border.Border;
 
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -37,14 +39,19 @@ class LightPanel extends JPanel {
         if (this.phase == true) {
             this.setForeground(this.color);
         } else {
-            this.setForeground(Color.black);
+            this.setForeground(new Color(8, 8, 8));
         }
         this.phase ^= true;
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        g.fillOval(0, 0, g.getClipBounds().width - 1, g.getClipBounds().height - 1);
+        int width = g.getClipBounds().width, height = g.getClipBounds().height;
+        g.setColor(new Color(48, 48, 48));
+        g.fillOval(0, 0, width - 1, height - 1);
+        g.setColor(this.getForeground());
+        g.fillOval((int) (width * 0.05), (int) (height * 0.05), (int) (width * 0.9),
+                (int) (height * 0.9));
     }
 }
 
