@@ -3,6 +3,7 @@ package org.traube;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,18 +28,23 @@ class LightPanel extends JPanel {
     public LightPanel(Color color, Boolean defaultPhase) {
         super();
         this.color = color;
-        this.setBackground(this.color);
+        this.setForeground(this.color);
         this.phase ^= defaultPhase;
         this.toggle();
     }
 
     public void toggle() {
         if (this.phase == true) {
-            this.setBackground(this.color);
+            this.setForeground(this.color);
         } else {
-            this.setBackground(Color.black);
+            this.setForeground(Color.black);
         }
         this.phase ^= true;
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        g.fillOval(0, 0, g.getClipBounds().width - 1, g.getClipBounds().height - 1);
     }
 }
 
@@ -76,7 +82,8 @@ public class TrafficLight extends JFrame {
     private boolean notCalledYet = true;
 
     private void switchLight(ActionEvent event) {
-        if (notCalledYet || (phase && watch.getTime() > 2000) || (!phase && watch.getTime() > 3000)) {
+        if (notCalledYet || (phase && watch.getTime() > 2000) || (!phase &&
+                watch.getTime() > 3000)) {
             if (phase) {
                 greenLight.toggle();
                 yellowLight.toggle();
