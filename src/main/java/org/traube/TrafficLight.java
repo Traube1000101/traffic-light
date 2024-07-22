@@ -122,7 +122,9 @@ public class TrafficLight extends JFrame {
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(4, 1, 10, 10));
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        contentPanel.setBorder(padding);
+        Border border = BorderFactory.createLineBorder(new Color(48, 48, 48), 8);
+        contentPanel.setBorder(BorderFactory.createCompoundBorder(border, padding));
+        contentPanel.setBackground(new Color(96, 96, 96));
         this.setContentPane(contentPanel);
 
         System.setProperty("awt.useSystemAAFontSettings", "on"); // For antialiasing text
