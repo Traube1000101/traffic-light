@@ -123,7 +123,7 @@ public class TrafficLight extends JFrame {
     public TrafficLight() {
         this.setTitle(appTitle);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setVisible(true);
+        this.setLocationRelativeTo(null);
 
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(4, 1, 10, 10));
@@ -144,6 +144,7 @@ public class TrafficLight extends JFrame {
         addComponent(button, element -> element.addActionListener(this::switchLight));
 
         this.pack();
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
