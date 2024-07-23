@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
@@ -31,6 +33,7 @@ class LightPanel extends JPanel {
         super();
         this.color = color;
         this.setForeground(this.color);
+        this.setOpaque(false);
         this.phase ^= defaultPhase;
         this.toggle();
     }
@@ -46,12 +49,15 @@ class LightPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        int width = g.getClipBounds().width, height = g.getClipBounds().height;
-        g.setColor(new Color(48, 48, 48));
-        g.fillOval(0, 0, width - 1, height - 1);
-        g.setColor(this.getForeground());
-        g.fillOval((int) (width * 0.05), (int) (height * 0.05), (int) (width * 0.9),
-                (int) (height * 0.9));
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        int width = g2d.getClipBounds().width, height = g2d.getClipBounds().height;
+        g2d.setColor(new Color(48, 48, 48));
+        g2d.fillOval(0, 0, width - 1, height - 1);
+        g2d.setColor(this.getForeground());
+        g2d.fillOval((int) (width * 0.05), (int) (height * 0.05), (int) (width * 0.9), (int) (height * 0.9));
+        g2d.dispose();
     }
 }
 
@@ -101,7 +107,7 @@ public class TrafficLight extends JFrame {
 
             } else {
                 yellowLight.toggle();
-                setTimeout(2000, e1 -> {
+                setTimeout(2000, e -> {
                     redLight.toggle();
                     yellowLight.toggle();
                     greenLight.toggle();
@@ -126,8 +132,6 @@ public class TrafficLight extends JFrame {
         contentPanel.setBorder(BorderFactory.createCompoundBorder(border, padding));
         contentPanel.setBackground(new Color(96, 96, 96));
         this.setContentPane(contentPanel);
-
-        System.setProperty("awt.useSystemAAFontSettings", "on"); // For antialiasing text
 
         redLight = new LightPanel(Color.red, true);
         yellowLight = new LightPanel(Color.yellow);
